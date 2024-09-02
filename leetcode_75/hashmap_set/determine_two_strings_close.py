@@ -5,17 +5,33 @@ class Solution(object):
         :type word2: str
         :rtype: bool
         """
-        # prechecks to avoid useless looping
-        if len(word1) != len(word2):
+        letters1 = {}
+        for letter in word1:
+            if letter not in word2:
+                return False
+            if letter in letters1:
+                letters1[letter] += 1
+            else:
+                letters1[letter] = 1
+
+        letters2 = {}
+        for letter in word2:
+            if letter not in word1:
+                return False
+            if letter in letters2:
+                letters2[letter] += 1
+            else:
+                letters2[letter] = 1
+
+        nums1 = sorted(letters1.values())
+        nums2 = sorted(letters2.values())
+        if len(nums1) != len(nums2):
             return False
-        if word1 == word2:
-            return True
 
-        chars_words1 = {}
-        close_word = word1
-        for index, char in enumerate(word1):
-            if char != word2[index]:
-                if word2 in chars_words1:
-                    pass
-#!to be finished
+        for i in range(len(nums1)):
+            if nums1[i] != nums2[i]:
+                return False
+        return True
 
+sol = Solution()
+print(sol.closeStrings('uau', 'ssx'))
